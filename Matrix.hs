@@ -1,23 +1,23 @@
-module Matrix (Matrix, fillWith, fromRule, numRows, numColumns, at, mtranspose, mmap) where
-newtype Matrix a = Mat ((Int,Int), (Int,Int) -> a)
+module Matrix (Matrix(..), fillWith, fromRule, numRows, numColumns, at, mtranspose, mmap) where
+newtype Matrix a = Mat ((Int, Int), (Int, Int) -> a)
 
-fillWith :: (Int,Int) -> a -> (Matrix a)
-fillWith (n,m) k = Mat ((n,m), (\(_,_) -> k))
+fillWith :: (Int, Int) -> a -> (Matrix a)
+fillWith (n, m) k = Mat ((n, m), (\(_, _) -> k))
 
-fromRule :: (Int,Int) -> ((Int,Int) -> a) -> (Matrix a)
-fromRule (n,m) f = Mat ((n,m), f)
+fromRule :: (Int,Int) -> ((Int, Int) -> a) -> (Matrix a)
+fromRule (n, m) f = Mat ((n, m), f)
 
 numRows :: (Matrix a) -> Int
-numRows (Mat ((n,_),_)) = n
+numRows (Mat ((n, _) ,_)) = n
 
 numColumns :: (Matrix a) -> Int
-numColumns (Mat ((_,m),_)) = m
+numColumns (Mat ((_, m), _)) = m
 
 at :: (Matrix a) -> (Int, Int) -> a
-at (Mat ((n,m), f)) (i,j)| (i > 0) && (j > 0) || (i <= n) && (j <= m) = f (i,j)
+at (Mat ((n, m), f)) (i, j) | (i > 0) && (j > 0) && (i <= n) && (j <= m) = f (i, j)
 
 mtranspose :: (Matrix a) -> (Matrix a)
-mtranspose (Mat ((n,m),f)) = (Mat ((m,n),\(j,i) -> f (i,j)))
+mtranspose (Mat ((n, m), f)) = (Mat ((m, n), \(j, i) -> f (i, j)))
 
 mmap :: (a -> b) -> (Matrix a) -> (Matrix b)
-mmap h (Mat ((n,m),f)) = (Mat ((n,m), h.f))
+mmap h (Mat ((n, m), f)) = (Mat ((n, m), h.f))
