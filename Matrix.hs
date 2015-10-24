@@ -4,7 +4,7 @@ newtype Matrix a = Mat ((Int, Int), (Int, Int) -> a)
 fillWith :: (Int, Int) -> a -> (Matrix a)
 fillWith (n, m) k = Mat ((n, m), (\(_, _) -> k))
 
-fromRule :: (Int,Int) -> ((Int, Int) -> a) -> (Matrix a)
+fromRule :: (Int, Int) -> ((Int, Int) -> a) -> (Matrix a)
 fromRule (n, m) f = Mat ((n, m), f)
 
 numRows :: (Matrix a) -> Int
